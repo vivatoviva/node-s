@@ -1,50 +1,68 @@
-console.log('1');
-// 1 6 7 2 4 5 9 10 11 8 3
-// 记作 set1
-setTimeout(function () {
-    console.log('2');
-    // set4
-    setTimeout(function() {
-        console.log('3');
+function serviceLocator() {
+    const dependencies = {};
+    const factories = {};
+    const serviceLocator = {};
+    serviceLocator.factory = (name, factory) => {
+        factories[name] = factory;
+    }
+    serviceLocator.register = (name, instance) => {
+        dependencies[name] = instance;
+    }
+    serviceLocator.get = (name) => {
+        if(dependencies[name]) {
+            return dependencies[name];
+        }
+        const factory = factories[name];
+        dependencies[name] = factories && factory();
+        if(!dependencies[name]) {
+            throw Error(`Cannot find module: ${name}`);
+        }
+    }
+
+    return serviceLocator;
+}
+
+(function(root, factory){
+    if (typeof define === 'function' && define.amd) {
+        define(['mustanche'], factory);
+    } else if (typeof module === 'object' && typeof module.exports === 'object') {
+        const mustanche = require('mustanche');
+        module.exports = factory(mustanche);
+    } else {
+        root.UmdModule = factory(root.Mustanche);
+    }
+})(this, function(mustanche) {
+    // 模块相关使用代码
+    const template = 'hello'
+})
+
+let demoNode = ({
+    tagName: 'ul',
+    props: {'class': 'list'},
+    children: [
+        ({tagName: 'li', children: ['douyin']}),
+        ({tagName: 'li', children: ['toutiao']})
+    ]
+});
+function Element({target, props, children}) {
+    if (this instanceof Element ) {
+        return new Element({target, props, children});
+    }
+    this.target = target;
+    this.props = props || {};
+    this.children = children || [];
+}
+function createTree(demoNode) {
+    const children = [];
+    if(demoNode === 'string') {
+        return demoNode;
+    }
+    demoNode.children && demoNode.children.map(item => {
+        children.push(createTree(item));
     });
-    // pro2
-    new Promise(function (resolve) {
-        console.log('4');
-        resolve();
-    }).then(function () {
-        console.log('5')
-    })
-})
+    const newElement = new Element(demoNode);
+    newElement.children = children;
+    return newElement;
+}
 
-// 记作 pro1
-new Promise(function (resolve) {
-    console.log('6');
-    resolve();
-}).then(function () {
-    console.log('7');
-    // set3
-    setTimeout(function() {
-        console.log('8');
-    });
-})
-
-// 记作 set2
-setTimeout(function () {
-    console.log('9');
-    // 记作 pro3
-    new Promise(function (resolve) {
-        console.log('10');
-        resolve();
-    }).then(function () {
-        console.log('11');
-    })
-})
-console.log('test')
-
-
-// 1,6,
-
-var time = setInterval(function() {console.log(2)})
-
-
-new Promise(function(resolve, reject) {resolve()}).then(() => console.log(1))
+console.log(createTree(demoNode))
