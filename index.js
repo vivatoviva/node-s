@@ -54,7 +54,7 @@ function Element({target, props, children}) {
 }
 function createTree(demoNode) {
     const children = [];
-    if(demoNode === 'string') {
+    if(typeof demoNode === 'string') {
         return demoNode;
     }
     demoNode.children && demoNode.children.map(item => {

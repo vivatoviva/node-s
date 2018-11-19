@@ -8,7 +8,6 @@ asyncModule.initialize = callback => {
   }, 1000);
 }
 asyncModule.tellMeSomething = (callback) => {
-  console.log(callback)
   process.nextTick(() => {
     if(asyncModule.initialized) {
       callback(null, 'ok');
