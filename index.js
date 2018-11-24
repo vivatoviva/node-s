@@ -1,10 +1,7 @@
-const a = 1;
-try {
-    process.nextTick(() => {
-        console.log(a);
-        throw new Error('error');
-    })
-} catch(error) {
-    console.log('puhu')
-    console.log(error);
-}
+setTimeout(() => console.log('setTimeout1'), 0);
+setTimeout(() => {
+  console.log('setTimeout2');
+  setTimeout(() => console.log('setTimeout4'));
+  setImmediate(() => console.log('immediate'));
+}, 0);
+setTimeout(() => console.log('setTimeout3'), 0);
