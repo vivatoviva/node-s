@@ -13,7 +13,7 @@ class OfflineSate {
       setTimeout(() => {
         this.activate();
       }, 5000);
-    }
+    };
     this.failSafeSocket.socket = net.createConnection(this.failSafeSocket.options, () => {
       this.failSafeSocket.changState('online')
     });

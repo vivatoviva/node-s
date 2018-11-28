@@ -1,7 +1,8 @@
-setTimeout(() => console.log('setTimeout1'), 0);
-setTimeout(() => {
-  console.log('setTimeout2');
-  setTimeout(() => console.log('setTimeout4'));
-  setImmediate(() => console.log('immediate'));
-}, 0);
-setTimeout(() => console.log('setTimeout3'), 0);
+function add() {
+  const num = 1;
+  function test() {
+    console.log(num);
+  }
+  test();
+}
+add();

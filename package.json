@@ -14,10 +14,14 @@
     "eslint-plugin-import": "^2.14.0"
   },
   "dependencies": {
+    "chance": "^1.0.16",
     "consul": "^0.34.1",
     "formidable": "^1.2.1",
     "http-proxy": "^1.17.0",
+    "multipipe": "^2.0.3",
+    "outils": "^1.4.0",
     "portfinder": "^1.0.19",
-    "split": "^1.0.1"
+    "split": "^1.0.1",
+    "zlib": "^1.0.5"
   }
 }
